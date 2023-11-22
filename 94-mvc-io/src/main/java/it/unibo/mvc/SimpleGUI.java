@@ -3,6 +3,8 @@ package it.unibo.mvc;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.BrokenBarrierException;
 
 import javax.swing.BoxLayout;
@@ -27,6 +29,27 @@ public final class SimpleGUI {
         final JTextArea textArea = new JTextArea();
         final JButton print = new JButton("Print");
         final JButton showHistory = new JButton("Show history");
+
+        print.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setNextStringToPrint(textField.getText());
+                controller.printCurrentString();
+            }
+            
+        });
+
+        showHistory.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (final String string : controller.getHistoryOfPrintedStrings()) {
+                    textArea.append(string + "\n");
+                }
+            }
+            
+        });
 
         panel.add(textField, BorderLayout.NORTH);
         panel.add(textArea, BorderLayout.CENTER);
